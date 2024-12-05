@@ -1,6 +1,6 @@
 {
-  "name": "ply3d-boilerplate",
-  "private": true,
+  "name": "dkb-ply3d-boilerplate",
+  "private": false,
   "version": "0.0.0",
   "description": "A Three.js Boilerplate for TypeScript Vite projects",
   "type": "module",
