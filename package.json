@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "description": "A Three.js Boilerplate for TypeScript Vite projects",
   "type": "module",
+  "main": "main.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -11,6 +12,7 @@
     "deploy": "gh-pages -d ./dist"
   },
   "devDependencies": {
+    "@types/node": "^22.10.1",
     "@types/three": "^0.170.0",
     "gh-pages": "^6.1.1",
     "three": "^0.171.0",
