@@ -1,0 +1,19 @@
+{
+  "name": "ply3d-boilerplate",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A Three.js Boilerplate for TypeScript Vite projects",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d ./dist"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.2",
+    "vite": "^6.0.1"
+  },
+  "author": "Dogukan Kaan Bozkurt @dkbozkurt",
+  "license": "BSD 3-Clause"
+}
