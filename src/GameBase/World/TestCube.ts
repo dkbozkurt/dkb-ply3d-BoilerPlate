@@ -1,34 +1,31 @@
-import './style.css'
 import * as THREE from 'three'
+import GameBase from "../GamesBase.ts"
 
-const scene = new THREE.Scene()
+export default class TestCube {
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-camera.position.z = 1.5
+	gameBase: GameBase
+	scene: THREE.Scene
+	geometry: THREE.BufferGeometry
+	material: THREE.Material
+	mesh: THREE.Object3D
 
-const renderer = new THREE.WebGLRenderer()
-renderer.setSize(window.innerWidth, window.innerHeight)
-document.body.appendChild(renderer.domElement)
+	constructor() {
+		this.gameBase = new GameBase()
+		this.scene = this.gameBase.scene
 
-window.addEventListener('resize', () => {
-	camera.aspect = window.innerWidth / window.innerHeight
-	camera.updateProjectionMatrix()
-	renderer.setSize(window.innerWidth, window.innerHeight)
-})
+		this.geometry = new THREE.BoxGeometry()
+		this.material = new THREE.MeshNormalMaterial({ wireframe: true })
 
-const geometry = new THREE.BoxGeometry()
-const material = new THREE.MeshNormalMaterial({ wireframe: true })
+		this.mesh = new THREE.Mesh(this.geometry, this.material)
+		this.scene.add(this.mesh)
+	}
 
-const cube = new THREE.Mesh(geometry, material)
-scene.add(cube)
+	update() {
+		this.mesh.rotation.x += 0.01
+		this.mesh.rotation.y += 0.01
+	}
 
-function animate() {
-	requestAnimationFrame(animate)
+	destroy() {
 
-	cube.rotation.x += 0.01
-	cube.rotation.y += 0.01
-
-	renderer.render(scene, camera)
+	}
 }
-
-animate()

@@ -13,9 +13,9 @@ let instance: GameBase | null = null
 
 export default class GameBase
 {
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement | undefined
     
-    constructor(canvas)
+    constructor(canvas: HTMLCanvasElement)
     {
         // Singleton pattern
         if(instance)
