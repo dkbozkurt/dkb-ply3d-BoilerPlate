@@ -37,6 +37,17 @@ export default class Renderer {
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+        if (this.debug.active)
+            this.debugPanel()
+    }
+
+    debugPanel() {
+        const debugObject = {
+            LogRendererInfo: () => { this.logRendererInfo() },
+        }
+        const debugFolder = this.debug.ui.addFolder('Renderer')
+        debugFolder.add(debugObject, 'LogRendererInfo')
+
     }
 
     resize() {
@@ -46,14 +57,14 @@ export default class Renderer {
 
     update() {
         this.instance.render(this.scene, this.camera.instance)
+    }
 
-        if (this.debug.active) {
-            console.log('Renderer.info:', this.instance.info);
-            console.log('Draw calls:', this.instance.info.render.calls);
-            console.log('Triangles:', this.instance.info.render.triangles);
-            console.log('Geometries:', this.instance.info.memory.geometries);
-            console.log('Textures:', this.instance.info.memory.textures);
-        }
+    logRendererInfo() {
+        console.log('Renderer.info:', this.instance.info);
+        console.log('Draw calls:', this.instance.info.render.calls);
+        console.log('Triangles:', this.instance.info.render.triangles);
+        console.log('Geometries:', this.instance.info.memory.geometries);
+        console.log('Textures:', this.instance.info.memory.textures);
     }
 
 }

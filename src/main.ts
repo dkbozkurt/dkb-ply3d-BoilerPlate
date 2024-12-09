@@ -1,7 +1,7 @@
 import './style.css'
 import GameBase from './GameBase/GamesBase';
 
-let gameBase: GameBase | undefined
+let gameBase!: GameBase
 
 document.addEventListener("DOMContentLoaded", function () {
 	const canvas = document.querySelector('canvas.webgl') as HTMLCanvasElement
@@ -9,11 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	if(canvas)
 	{
 		gameBase = new GameBase(canvas)
-		console.log('gameBase: ', gameBase);
 	}
 });
 
-export function userClickedDownloadButton() : void
+export function userClickedDownloadButton(url:string) : void
 {
     console.log('External API store call!');
 }

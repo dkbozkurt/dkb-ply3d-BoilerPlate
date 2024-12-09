@@ -1,11 +1,6 @@
 import * as THREE from 'three'
 import GameBase from '../GamesBase'
-
-type Overlay = {
-    geometry?: THREE.PlaneGeometry;
-    material?: THREE.ShaderMaterial;
-    mesh?: THREE.Mesh;
-}
+import { Overlay } from '../Types/models'
 
 export default class LoadingWindow {
     gameBaseInstance: GameBase

@@ -2,20 +2,9 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { gsap } from 'gsap'
 import LoadingWindow from './LoadingWindow.js'
+import {Source, Loaders} from '../Types/models.js'
 
 import EventEmitter from './EventEmitter.js'
-
-type Source = {
-    name: string;
-    type: 'texture' | 'gltfModel' | 'material' | 'cubeTexture' | 'audio'; // Enumerate possible types
-    path: string;
-};
-
-type Loaders = {
-    gltfLoader?: GLTFLoader;
-    textureLoader?: THREE.TextureLoader;
-    cubeTextureLoader?: THREE.CubeTextureLoader;
-};
 
 export default class Resources extends EventEmitter {
     sources: Source[];
@@ -54,7 +43,7 @@ export default class Resources extends EventEmitter {
                 this.loadingWindow.completed()
             },
             (itemUrl, itemsLoaded, itemsTotal) => {
-                console.log(itemUrl, itemsLoaded / itemsTotal);
+                // console.log(itemUrl, itemsLoaded / itemsTotal);
                 const progressRatio = itemsLoaded / itemsTotal
                 this.loadingWindow.updateLoadingBarElement(progressRatio)
             }

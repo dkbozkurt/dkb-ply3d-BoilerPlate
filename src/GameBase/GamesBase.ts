@@ -7,6 +7,8 @@ import Renderer from './Renderer.ts'
 import World from './World/World.ts'
 import Resources from './Utils/Resources.ts'
 import LoadingWindow from './Utils/LoadingWindow.ts';
+import AudioManager from './AudioManager.ts'
+import InputManager from './InputManager.ts'
 
 import Stats from 'three/addons/libs/stats.module.js'
 import sources from './sources.ts'
@@ -17,7 +19,7 @@ declare global {
     }
 }
 
-let instance: GameBase | null = null
+let instance!: GameBase
 
 export default class GameBase {
     canvas!: HTMLCanvasElement
@@ -26,11 +28,13 @@ export default class GameBase {
     time!: Time
     scene!: THREE.Scene
     loadingWindow!: LoadingWindow
+    audioManager!: AudioManager
     resources!: Resources
     camera!: Camera
     renderer!: Renderer
     world!: World
     stats!: Stats
+    inputManager!: InputManager
 
     constructor(canvas: HTMLCanvasElement) {
         // Singleton pattern
@@ -50,12 +54,14 @@ export default class GameBase {
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.time = new Time()
+        this.inputManager = new InputManager()
         this.scene = new THREE.Scene()
         this.loadingWindow = new LoadingWindow()
         this.resources = new Resources(sources, this.loadingWindow)
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
+        this.audioManager = new AudioManager()
 
         // Sizes resize event
         this.sizes.on('resize', () => {
@@ -97,7 +103,7 @@ export default class GameBase {
     destroy() {
         this.sizes.off('resize')
         this.time.off('tick')
-        // this.inputManager.destroy()
+        this.inputManager.destroy()
 
         // Traverse the whole scene
         this.scene.traverse((child) => {
