@@ -41,7 +41,7 @@ If you forked this repository, then you can publish your changes to GitHub pages
 npm run deploy
 ```
 
-Visit `https://<your github username>.github.io/ply3d-BoilerPlate/`
+Visit `https://<your github username>.github.io/dkb-ply3d-BoilerPlate/`
 
 E.g.,
 
