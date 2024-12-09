@@ -2,7 +2,7 @@ import * as dat from 'lil-gui'
 
 export default class Debug {
     active: boolean
-    ui: dat.GUI | undefined
+    ui!: dat.GUI
 
     constructor() {
         this.active = window.location.hash === '#debug'
@@ -11,5 +11,4 @@ export default class Debug {
             this.ui = new dat.GUI()
         }
     }
-
 }

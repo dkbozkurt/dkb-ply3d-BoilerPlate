@@ -1,20 +1,20 @@
 import * as THREE from 'three'
-import GameBase from '../GameBase.ts'
+import GameBase from '../GamesBase.ts'
 import TestCube from './TestCube.ts'
 
 export default class World
 {
-    gameBaseInstance: GameBase
+    gameBase: GameBase
     scene: THREE.Scene
     resources: any
     testCube: TestCube | undefined
 
     constructor()
     {
-        this.gameBaseInstance = new GameBase()
+        this.gameBase = new GameBase()
 
-        this.scene = this.gameBaseInstance.scene
-        this.resources = this.gameBaseInstance.resources
+        this.scene = this.gameBase.scene
+        this.resources = this.gameBase.resources
 
         // Wait for resources
         this.resources.on('ready', ()=>{

@@ -1,14 +1,14 @@
 import './style.css'
-import GameBase from './GameBase/GameBase.ts'
+import GameBase from './GameBase/GamesBase';
 
 let gameBase: GameBase | undefined
 
 document.addEventListener("DOMContentLoaded", function () {
-	const canvas = document.querySelector('canvas.webgl') as HTMLCanvasElement | null
+	const canvas = document.querySelector('canvas.webgl') as HTMLCanvasElement
 
 	if(canvas)
 	{
-		gameBase = new GameBase()
+		gameBase = new GameBase(canvas)
 	}
 });
 

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import GameBase from "./GameBase.ts";
+import GameBase from './GamesBase.ts';
 import Debug from './Utils/Debug.ts';
 import Sizes from './Utils/Sizes.ts';
 import Camera from './Camera.ts';

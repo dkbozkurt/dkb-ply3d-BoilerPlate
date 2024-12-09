@@ -1,24 +1,24 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-import GameBase from './GameBase.ts'
+import GameBase from './GamesBase.ts'
 import Sizes from './Utils/Sizes.ts'
 
 export default class Camera {
 
-    gameBaseInstance: GameBase
+    gameBase: GameBase
     sizes: Sizes
     scene: THREE.Scene
-    canvas: HTMLCanvasElement
+    canvas!: HTMLCanvasElement
     instance: THREE.Camera
     controls: OrbitControls | null
 
     constructor() {
-        this.gameBaseInstance = new GameBase()
+        this.gameBase = new GameBase()
 
-        this.sizes = this.gameBaseInstance.sizes;
-        this.scene = this.gameBaseInstance.scene;
-        this.canvas = this.gameBaseInstance.canvas;
+        this.sizes = this.gameBase.sizes;
+        this.scene = this.gameBase.scene;
+        this.canvas = this.gameBase.canvas;
         this.controls = null;
 
         this.instance = new THREE.PerspectiveCamera(
