@@ -11,7 +11,7 @@ export default class World
 
     constructor()
     {
-        this.gameBase = new GameBase()
+        this.gameBase = GameBase.getInstance()
 
         this.scene = this.gameBase.scene
         this.resources = this.gameBase.resources

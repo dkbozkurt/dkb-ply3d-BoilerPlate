@@ -70,6 +70,17 @@ export default class GameBase {
         this.debugPanel()
     }
 
+    static getInstance(canvas?: HTMLCanvasElement): GameBase {
+        if(!instance){
+            if(!canvas)
+            {
+                throw new Error('Canvas is required to create a new instance')
+            }
+            instance = new GameBase(canvas)
+        }
+        return instance
+    }
+
     resize() {
         this.camera.resize()
         this.renderer.resize()

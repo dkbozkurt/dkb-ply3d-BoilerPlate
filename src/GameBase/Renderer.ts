@@ -14,7 +14,7 @@ export default class Renderer {
     instance: THREE.WebGLRenderer
 
     constructor() {
-        this.gameBase = new GameBase()
+        this.gameBase = GameBase.getInstance()
 
         this.debug = this.gameBase.debug
         this.canvas = this.gameBase.canvas

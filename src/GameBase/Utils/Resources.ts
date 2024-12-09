@@ -1,13 +1,32 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { gsap } from 'gsap'
+import LoadingWindow from './LoadingWindow.js'
 
 import EventEmitter from './EventEmitter.js'
 
-export default class Resources extends EventEmitter
-{
-    constructor(sources: any,loadingWindow: LoadingWindow)
-    {
+type Source = {
+    name: string;
+    type: 'texture' | 'gltfModel' | 'material' | 'cubeTexture' | 'audio'; // Enumerate possible types
+    path: string;
+};
+
+type Loaders = {
+    gltfLoader?: GLTFLoader;
+    textureLoader?: THREE.TextureLoader;
+    cubeTextureLoader?: THREE.CubeTextureLoader;
+};
+
+export default class Resources extends EventEmitter {
+    sources: Source[];
+    loadingWindow: LoadingWindow;
+    items: { [key: string]: any } = {};
+    toLoad: number;
+    loaded: number = 0;
+    loaders!: Loaders;
+    loadingManager!: THREE.LoadingManager;
+
+    constructor(sources: Source[], loadingWindow: LoadingWindow) {
         super()
 
         // Options
@@ -23,22 +42,20 @@ export default class Resources extends EventEmitter
         this.startLoading()
     }
 
-    setLoaders()
-    {
+    setLoaders() {
         this.loadingManager = new THREE.LoadingManager(
-            ()=> {
+            () => {
                 gsap.to(
-                    this.loadingWindow.overlay.material.uniforms.uAlpha,
-                    { duration: 0.5, value:0}
+                    this.loadingWindow.overlay.material!.uniforms.uAlpha,
+                    { duration: 0.5, value: 0 }
                 )
                 console.log('Loaded')
                 this.trigger('ready')
                 this.loadingWindow.completed()
             },
-            (itemUrl,itemsLoaded, itemsTotal)=>
-            {
-                // console.log(itemUrl, itemsLoaded / itemsTotal);
-                const progressRatio = itemsLoaded/ itemsTotal
+            (itemUrl, itemsLoaded, itemsTotal) => {
+                console.log(itemUrl, itemsLoaded / itemsTotal);
+                const progressRatio = itemsLoaded / itemsTotal
                 this.loadingWindow.updateLoadingBarElement(progressRatio)
             }
         )
@@ -48,50 +65,40 @@ export default class Resources extends EventEmitter
         this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(this.loadingManager)
     }
 
-    startLoading()
-    {
-        for(const source of this.sources)
-        {
-            if(source.type === 'gltfModel')
-            {
-                this.loaders.gltfLoader.load(
+    startLoading() {
+        for (const source of this.sources) {
+            if (source.type === 'gltfModel') {
+                this.loaders.gltfLoader!.load(
                     source.path,
-                    (file) =>
-                    {
-                        this.sourceLoaded(source,file)
+                    (file) => {
+                        this.sourceLoaded(source, file)
                     }
                 )
             }
-            else if(source.type === 'texture')
-            {
-                this.loaders.textureLoader.load(
+            else if (source.type === 'texture') {
+                this.loaders.textureLoader!.load(
                     source.path,
-                    (file) =>
-                    {
-                        this.sourceLoaded(source,file)
+                    (file) => {
+                        this.sourceLoaded(source, file)
                     }
                 )
             }
-            else if(source.type === 'cubeTexture')
-            {
-                this.loaders.cubeTextureLoader.load(
-                    source.path,
-                    (file) =>
-                    {
-                        this.sourceLoaded(source,file)
+            else if (source.type === 'cubeTexture') {
+                this.loaders.cubeTextureLoader!.load(
+                    [source.path],
+                    (file) => {
+                        this.sourceLoaded(source, file)
                     }
                 )
             }
-            else if(source.type === 'audio')
-            {
+            else if (source.type === 'audio') {
                 const file = new Audio(source.path)
-                this.sourceLoaded(source,file)
+                this.sourceLoaded(source, file)
             }
         }
     }
 
-    sourceLoaded(source,file)
-    {
+    sourceLoaded(source: Source, file: any) {
         this.items[source.name] = file
 
         // ! Loading process is controlled by LoadingManager

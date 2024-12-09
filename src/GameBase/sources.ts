@@ -1,12 +1,18 @@
-// import grassColorTexture from '@/textures/dirt/color.jpg'
+import grassColorTexture from '@/textures/flower.png'
 // import grassNormalTexture from '@/textures/dirt/normal.jpg'
 
-export default [
-    // {
-    //     name: 'grassColorTexture',
-    //     type: 'texture',
-    //     path: grassColorTexture
-    // },
+type Source = {
+    name: string;
+    type: 'texture' | 'gltfModel' | 'material' | 'cubeTexture' | 'audio'; // Enumerate possible types
+    path: string; // Replace `string` with the actual type if `path` is not a string
+};
+
+const sources: Source[] = [
+    {
+        name: 'grassColorTexture',
+        type: 'texture',
+        path: grassColorTexture
+    },
     // {
     //     name: 'foxModel',
     //     type: 'gltfModel',
@@ -18,3 +24,5 @@ export default [
     //     path: matcapMaterial1
     // },
 ]
+
+export default sources;

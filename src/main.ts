@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	if(canvas)
 	{
 		gameBase = new GameBase(canvas)
+		console.log('gameBase: ', gameBase);
 	}
 });
 

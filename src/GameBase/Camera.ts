@@ -14,7 +14,7 @@ export default class Camera {
     controls: OrbitControls | null
 
     constructor() {
-        this.gameBase = new GameBase()
+        this.gameBase = GameBase.getInstance();
 
         this.sizes = this.gameBase.sizes;
         this.scene = this.gameBase.scene;

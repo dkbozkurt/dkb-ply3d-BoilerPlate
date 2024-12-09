@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import GameBase from "../GamesBase.ts"
+import GameBase from '../GamesBase'
 
 export default class TestCube {
 
@@ -10,7 +10,7 @@ export default class TestCube {
 	mesh: THREE.Object3D
 
 	constructor() {
-		this.gameBase = new GameBase()
+		this.gameBase = GameBase.getInstance()
 		this.scene = this.gameBase.scene
 
 		this.geometry = new THREE.BoxGeometry()
