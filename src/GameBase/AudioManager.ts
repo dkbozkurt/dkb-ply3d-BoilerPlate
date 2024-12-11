@@ -1,6 +1,6 @@
 import GameBase from "./GamesBase";
 import InputManager from "./InputManager";
-import { AudioResources } from "./Types/models";
+import { AudioResources } from "./Types";
 
 let instance!: AudioManager;
 

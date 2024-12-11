@@ -1,102 +1,73 @@
-import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { gsap } from 'gsap'
-import LoadingWindow from './LoadingWindow.js'
-import {Source, Loaders} from '../Types/models.js'
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import LoadingWindow from './LoadingWindow.js';
+import EventEmitter from './EventEmitter.js';
 
-import EventEmitter from './EventEmitter.js'
+export type Loaders = {
+    gltfLoader?: GLTFLoader;
+    textureLoader?: THREE.TextureLoader;
+    cubeTextureLoader?: THREE.CubeTextureLoader;
+};
 
 export default class Resources extends EventEmitter {
-    sources: Source[];
+    sources: models.Source[];
     loadingWindow: LoadingWindow;
     items: { [key: string]: any } = {};
     toLoad: number;
-    loaded: number = 0;
+    loaded = 0;
     loaders!: Loaders;
     loadingManager!: THREE.LoadingManager;
 
-    constructor(sources: Source[], loadingWindow: LoadingWindow) {
-        super()
+    constructor(sources: models.Source[], loadingWindow: LoadingWindow) {
+        super();
+        this.sources = sources;
+        this.loadingWindow = loadingWindow;
 
-        // Options
-        this.sources = sources
-        this.loadingWindow = loadingWindow
-
-        // Setup
-        this.items = {}
-        this.toLoad = this.sources.length
-        this.loaded = 0
-
-        this.setLoaders()
-        this.startLoading()
+        this.toLoad = this.sources.length;
+        this.setLoaders();
+        this.startLoading();
     }
 
     setLoaders() {
         this.loadingManager = new THREE.LoadingManager(
             () => {
-                gsap.to(
-                    this.loadingWindow.overlay.material!.uniforms.uAlpha,
-                    { duration: 0.5, value: 0 }
-                )
-                console.log('Loaded')
-                this.trigger('ready')
-                this.loadingWindow.completed()
+                this.trigger('ready');
+                this.loadingWindow.completed();
             },
             (itemUrl, itemsLoaded, itemsTotal) => {
-                // console.log(itemUrl, itemsLoaded / itemsTotal);
-                const progressRatio = itemsLoaded / itemsTotal
-                this.loadingWindow.updateLoadingBarElement(progressRatio)
+                const progressRatio = itemsLoaded / itemsTotal;
+                this.loadingWindow.updateLoadingProgress(progressRatio);
             }
-        )
-        this.loaders = {}
-        this.loaders.gltfLoader = new GLTFLoader(this.loadingManager)
-        this.loaders.textureLoader = new THREE.TextureLoader(this.loadingManager)
-        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(this.loadingManager)
+        );
+        this.loaders = {
+            gltfLoader: new GLTFLoader(this.loadingManager),
+            textureLoader: new THREE.TextureLoader(this.loadingManager),
+            cubeTextureLoader: new THREE.CubeTextureLoader(this.loadingManager),
+        };
     }
 
     startLoading() {
         for (const source of this.sources) {
             if (source.type === 'gltfModel') {
-                this.loaders.gltfLoader!.load(
-                    source.path,
-                    (file) => {
-                        this.sourceLoaded(source, file)
-                    }
-                )
-            }
-            else if (source.type === 'texture') {
-                this.loaders.textureLoader!.load(
-                    source.path,
-                    (file) => {
-                        this.sourceLoaded(source, file)
-                    }
-                )
-            }
-            else if (source.type === 'cubeTexture') {
-                this.loaders.cubeTextureLoader!.load(
-                    [source.path],
-                    (file) => {
-                        this.sourceLoaded(source, file)
-                    }
-                )
-            }
-            else if (source.type === 'audio') {
-                const file = new Audio(source.path)
-                this.sourceLoaded(source, file)
+                this.loaders.gltfLoader!.load(source.path, (file) => {
+                    this.sourceLoaded(source, file);
+                });
+            } else if (source.type === 'texture') {
+                this.loaders.textureLoader!.load(source.path, (file) => {
+                    this.sourceLoaded(source, file);
+                });
+            } else if (source.type === 'cubeTexture') {
+                this.loaders.cubeTextureLoader!.load([source.path], (file) => {
+                    this.sourceLoaded(source, file);
+                });
+            } else if (source.type === 'audio') {
+                const file = new Audio(source.path);
+                this.sourceLoaded(source, file);
             }
         }
     }
 
-    sourceLoaded(source: Source, file: any) {
-        this.items[source.name] = file
-
-        // ! Loading process is controlled by LoadingManager
-        // this.loaded++
-
-        // if(this.loaded === this.toLoad)
-        // {
-        //     console.log('Loading finished')
-        //     this.trigger('ready')
-        // }
+    sourceLoaded(source: models.Source, file: any) {
+        this.items[source.name] = file;
     }
 }

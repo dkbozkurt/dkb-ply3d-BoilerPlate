@@ -19,7 +19,7 @@ declare global {
     }
 }
 
-let instance!: GameBase
+let instance: GameBase;
 
 export default class GameBase {
     canvas!: HTMLCanvasElement

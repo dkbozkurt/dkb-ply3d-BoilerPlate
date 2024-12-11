@@ -1,6 +1,6 @@
 import grassColorTexture from '@/textures/flower.png'
 // import grassNormalTexture from '@/textures/dirt/normal.jpg'
-import { Source } from './Types/models';
+import { Source } from './Types';
 
 const sources: Source[] = [
     {

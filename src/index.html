@@ -1,19 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>ply3d-BoilersPlate</title>
-	<link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dkb-ply3d-BoilerPlate</title>
+    <link rel="stylesheet" href="./style.css">
     <link rel="icon" href="data:,">
 </head>
-
 <body>
 	<canvas class="webgl"></canvas>
-	<div class="loading-text">Loading ...</div>
-    <div class="loading-bar"></div>
-	<script type="module" src="./main.ts"></script>
+    <div class="preloader" id="application-preloader">
+        <div class="preloader_background_overlay">
+            <div class="preloader_wrapper">
+                <img class="preloader_icon" src="./App_Logo.png" alt="Preloader Icon">
+                <span class="preloader_name">App Name</span>
+                <div class="preloader_bar_container">
+                    <div class="preloader_outer_bar">
+                        <div class="preloader_bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="downloadButton">DOWNLOAD</div>
+    <script type="module" src="./main.ts"></script>
 </body>
-
 </html>
+
