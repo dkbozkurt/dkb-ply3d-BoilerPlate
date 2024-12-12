@@ -1,6 +1,5 @@
 import GameBase from "./GamesBase";
 import InputManager from "./InputManager";
-import { AudioResources } from "./Types";
 
 let instance!: AudioManager;
 
@@ -11,7 +10,7 @@ export default class AudioManager {
     resources!: any
     isMuted!: boolean
     isActiveForAudios!: boolean
-    audios!: AudioResources
+    audios!: models.AudioResources
     inputManager!: InputManager
 
     constructor() {

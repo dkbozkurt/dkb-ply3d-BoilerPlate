@@ -16,6 +16,7 @@ import sources from './sources.ts'
 declare global {
     interface Window {
         gameBase: GameBase;
+        audioManager: AudioManager;
     }
 }
 
